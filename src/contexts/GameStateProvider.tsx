@@ -37,7 +37,8 @@ const GameStateProvider = ({children}: { children: ReactNode }) => {
         if (cookies.gameState) {
             dispatch({type: 'initialSet', payload: {state: cookies.gameState, lastSave: cookies.lastSave}})
         }
-    });
+        // eslint-disable-next-line
+    },[]);
 
     return (
         <GameStateContext.Provider value={gameState}>

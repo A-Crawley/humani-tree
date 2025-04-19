@@ -12,7 +12,7 @@ const Events = () => {
     document.addEventListener('daysAddedSinceLastSave', (event) => {
         const {detail} = event as unknown as { detail: number }
         if (detail <= 0) return
-        toast(`Your village has progressed ${detail} days since your last save.`)
+        setTimeout(() => toast(`Your village has progressed ${detail} days since your last save.`), 1000)
     })
 
     return (
