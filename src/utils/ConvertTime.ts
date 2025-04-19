@@ -1,5 +1,5 @@
-﻿import {Seasons} from "types/Season";
-import Time from "types/Time";
+﻿import {Seasons} from "types/Season.ts";
+import Time from "types/Time.ts";
 
 const convertTime = (time: number) => {
     const season = Seasons[Math.floor(time / 100) % Seasons.length]
