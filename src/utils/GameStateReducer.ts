@@ -18,7 +18,8 @@ const gameStateReducer = (state: GameState, action: Action) => {
             const payload = action.payload as { state: GameState, lastSave: number }
             const now = Date.now()
             if (now > payload.lastSave) {
-                const daysToAdd = Math.floor((now - payload.lastSave) / 1000)
+                let daysToAdd = Math.floor((now - payload.lastSave) / 1000)
+                if (daysToAdd > 4000) daysToAdd = 4000
                 document.dispatchEvent(new CustomEvent<number>('daysAddedSinceLastSave', {detail: daysToAdd}))
                 return {...payload.state, time: (payload.state.time ?? 0) + daysToAdd}
             }
