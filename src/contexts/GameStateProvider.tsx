@@ -5,7 +5,12 @@ import { GameStateContext, GameStateDispatchContext } from "./GameStateContext";
 import gameStateReducer from "utils/GameStateReducer.ts";
 
 const initialGameState = {
-    time: 0,
+    time: {
+        season: 'Spring',
+        date: 1,
+        year: 1,
+        totalDays: 1
+    },
     items: {
         sticks: {
             amount: 0,

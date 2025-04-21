@@ -2,6 +2,7 @@
 
 const EventWrapper = () => {
     const [gameTickInterval, setGameTickInterval] = useState<number | null>(null)
+    const [timeTickInterval, setTimeTickInterval] = useState<number | null>(null)
 
     useEffect(() => {
         if (!gameTickInterval) {
@@ -15,6 +16,19 @@ const EventWrapper = () => {
             setGameTickInterval(null)
         }
     }, [gameTickInterval])
+
+    useEffect(() => {
+        if (!timeTickInterval) {
+            setTimeTickInterval(setInterval(() => {
+                document.dispatchEvent(new Event('timeTick'))
+            }, 2500))
+        }
+        return () => {
+            if (!timeTickInterval) return
+            clearInterval(timeTickInterval)
+            setTimeTickInterval(null)
+        }
+    }, [timeTickInterval])
 
     return (
         <></>

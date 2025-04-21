@@ -9,6 +9,10 @@ const Events = () => {
         dispatch?.({type: 'gameTick'})
     })
 
+    document.addEventListener('timeTick', () => {
+        dispatch?.({type: 'timeTick'})
+    })
+
     document.addEventListener('daysAddedSinceLastSave', (event) => {
         const {detail} = event as unknown as { detail: number }
         if (detail <= 0) return

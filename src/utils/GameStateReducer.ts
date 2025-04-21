@@ -3,6 +3,7 @@ import {Action} from "types/Action.ts";
 import {addItemPayload} from "types/AddItemPayload.ts";
 import Items from "types/Items.ts";
 import add from "utils/Add.ts";
+import Time from "types/Time.ts";
 
 const addItems = (items?: Items, payload?: addItemPayload) => {
     if (!payload) return items
@@ -12,23 +13,58 @@ const addItems = (items?: Items, payload?: addItemPayload) => {
     return items
 }
 
+const progressTime = (currentTime?: Time, daysToProgress: number = 1) : Time => {
+    if (!currentTime) return {season: 'Spring', date: 1, year: 1, totalDays: 1}
+    if (daysToProgress <= 0) return currentTime
+
+    while (daysToProgress > 0) {
+        currentTime.date++
+        daysToProgress--
+        if (currentTime.date <= 100) continue
+        switch (currentTime.season) {
+            case 'Spring':
+                currentTime = {date: 1, season: 'Summer', year: currentTime.year, totalDays: currentTime.totalDays + 1}
+                break;
+            case 'Summer':
+                currentTime = {date: 1, season: 'Autumn', year: currentTime.year, totalDays: currentTime.totalDays + 1}
+                break;
+            case 'Autumn':
+                currentTime = {date: 1, season: 'Winter', year: currentTime.year, totalDays: currentTime.totalDays + 1}
+                break;
+            case 'Winter':
+                currentTime = {
+                    date: 1,
+                    season: 'Spring',
+                    year: currentTime.year + 1,
+                    totalDays: currentTime.totalDays + 1
+                }
+                break;
+        }
+    }
+    return currentTime
+}
+
 const gameStateReducer = (state: GameState, action: Action) => {
     switch (action.type) {
         case 'initialSet': {
             const payload = action.payload as { state: GameState, lastSave: number }
+            if (typeof payload.state.time === 'number') payload.state.time = undefined
             const now = Date.now()
             if (now > payload.lastSave) {
-                let daysToAdd = Math.floor((now - payload.lastSave) / 1000)
+                let daysToAdd = Math.floor((now - payload.lastSave) / 2500)
                 if (daysToAdd > 4000) daysToAdd = 4000
                 document.dispatchEvent(new CustomEvent<number>('daysAddedSinceLastSave', {detail: daysToAdd}))
-                return {...payload.state, time: (payload.state.time ?? 0) + daysToAdd}
+                return {...payload.state, time: progressTime(payload.state.time,daysToAdd)}
             }
             return payload.state
         }
         case 'addItem':
             return {...state, items: addItems(state.items, action.payload as addItemPayload)}
         case 'gameTick':
-            return {...state, time: (state.time ?? 0) + 1}
+            // Do things
+            return state;
+        case 'timeTick':
+            return {...state, time: progressTime(state.time)}
         default:
             return state;
     }
