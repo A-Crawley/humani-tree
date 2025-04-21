@@ -17,6 +17,9 @@ const initialGameState = {
             multiplier: 1
         },
         logs: {}
+    },
+    buildings: {
+        shack: 0,
     }
 } as GameState
 

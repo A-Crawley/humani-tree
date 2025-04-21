@@ -1,6 +1,7 @@
 ﻿import TimeDisplay from "components/TimeDisplay";
 import ResourceDisplay from "components/ResourceDisplay";
 import EarlyActions from "components/EarlyActions";
+import Shop from "components/Shop.tsx";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 </div>
                 <div className='w-3/5 flex flex-col gap-2 border-l border-slate-900/50 p-2'>
                     <EarlyActions/>
+                    <Shop />
                 </div>
             </div>
         </div>

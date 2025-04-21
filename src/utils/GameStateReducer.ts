@@ -4,6 +4,7 @@ import {addItemPayload} from "types/AddItemPayload.ts";
 import Items from "types/Items.ts";
 import add from "utils/Add.ts";
 import Time from "types/Time.ts";
+import {Buildings, BuildingType, BuildingTypes} from "types/Buildings.ts";
 
 const addItems = (items?: Items, payload?: addItemPayload) => {
     if (!payload) return items
@@ -65,6 +66,28 @@ const gameStateReducer = (state: GameState, action: Action) => {
             return state;
         case 'timeTick':
             return {...state, time: progressTime(state.time)}
+        case 'buyBuilding': {
+            const {buildingType} = action.payload as { buildingType: BuildingType }
+            if (!buildingType || !BuildingTypes.includes(buildingType)) return state
+
+            switch (buildingType) {
+                case 'shack':
+                    if ((state.items?.sticks?.amount ?? 0) < Buildings.shack.cost) break;
+                    return {
+                        ...state,
+                        items: {
+                            ...state.items,
+                            sticks: {amount: state.items!.sticks!.amount - Buildings.shack.cost, multiplier: state.items!.sticks!.multiplier}
+                        },
+                        buildings: {
+                            ...state.buildings ?? {},
+                            shack: (state.buildings?.shack ?? 0) + 1
+                        }
+                    }
+            }
+
+            return state;
+        }
         default:
             return state;
     }
