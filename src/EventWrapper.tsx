@@ -1,34 +1,26 @@
 ﻿import {useEffect, useState} from "react";
 
+const useEventSender = (eventName: string, duration: number) => {
+    const [tickInterval, setTickInterval] = useState<number | null>(null)
+
+    useEffect(() => {
+        if (!tickInterval) {
+            setTickInterval(setInterval(() => {
+                document.dispatchEvent(new Event(eventName))
+            }, duration))
+        }
+        return () => {
+            if (!tickInterval) return
+            clearInterval(tickInterval)
+            setTickInterval(null)
+        }
+    }, [tickInterval])
+}
+
 const EventWrapper = () => {
-    const [gameTickInterval, setGameTickInterval] = useState<number | null>(null)
-    const [timeTickInterval, setTimeTickInterval] = useState<number | null>(null)
-
-    useEffect(() => {
-        if (!gameTickInterval) {
-            setGameTickInterval(setInterval(() => {
-                document.dispatchEvent(new Event('gameTick'))
-            }, 1000))
-        }
-        return () => {
-            if (!gameTickInterval) return
-            clearInterval(gameTickInterval)
-            setGameTickInterval(null)
-        }
-    }, [gameTickInterval])
-
-    useEffect(() => {
-        if (!timeTickInterval) {
-            setTimeTickInterval(setInterval(() => {
-                document.dispatchEvent(new Event('timeTick'))
-            }, 2500))
-        }
-        return () => {
-            if (!timeTickInterval) return
-            clearInterval(timeTickInterval)
-            setTimeTickInterval(null)
-        }
-    }, [timeTickInterval])
+    useEventSender('gameTick', 1000)
+    useEventSender('timeTick', 2500)
+    useEventSender('addHuman', 20000)
 
     return (
         <></>

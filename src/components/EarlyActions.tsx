@@ -10,10 +10,20 @@ const EarlyActions = () => {
         dispatch?.({type: 'addItem', payload: {key, amount: 1}})
     }
 
+    const handleAddHuman = () => {
+        dispatch?.({type: 'addHuman'})
+    }
+
+    const handleRemoveHuman = () => {
+        dispatch?.({type: 'removeHuman'})
+    }
+
     return (
         <>
             <Button size={'small'} onClick={() => handleAddItem('sticks')}>Gather Sticks</Button>
             <Button size={'small'} onClick={() => handleAddItem('berries')}>Gather Berries</Button>
+            <Button size={'small'} onClick={() => handleAddHuman()}>Add Human</Button>
+            <Button size={'small'} onClick={() => handleRemoveHuman()}>Remove Human</Button>
         </>
     )
 }

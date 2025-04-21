@@ -5,6 +5,7 @@ import Items from "types/Items.ts";
 import add from "utils/Add.ts";
 import Time from "types/Time.ts";
 import {Buildings, BuildingType, BuildingTypes} from "types/Buildings.ts";
+import Human from "types/Humans.ts";
 
 const addItems = (items?: Items, payload?: addItemPayload) => {
     if (!payload) return items
@@ -45,6 +46,26 @@ const progressTime = (currentTime?: Time, daysToProgress: number = 1) : Time => 
     return currentTime
 }
 
+const calculateOccupants = (buildings?: Record<BuildingType, number>) => {
+    let totalHumanOccupants = 0;
+
+    for (const buildingType in buildings) {
+        switch (buildingType as BuildingType) {
+            case 'shack':
+                totalHumanOccupants += buildings[buildingType as BuildingType]
+                break;
+        }
+    }
+
+    return totalHumanOccupants;
+}
+
+const generateHuman = () => {
+    return {
+        name: 'Human'
+    } as Human
+}
+
 const gameStateReducer = (state: GameState, action: Action) => {
     switch (action.type) {
         case 'initialSet': {
@@ -66,6 +87,15 @@ const gameStateReducer = (state: GameState, action: Action) => {
             return state;
         case 'timeTick':
             return {...state, time: progressTime(state.time)}
+        case 'addHuman':{
+            const totalHumansAllowed = calculateOccupants(state.buildings)
+            if ((state.humans?.length ?? 0) >= totalHumansAllowed) return state
+            return {...state, humans: [...(state.humans ?? []), generateHuman()]};
+        }
+        case 'removeHuman':{
+            if (!state.humans) return state
+            return {...state, humans: state.humans.slice(1)};
+        }
         case 'buyBuilding': {
             const {buildingType} = action.payload as { buildingType: BuildingType }
             if (!buildingType || !BuildingTypes.includes(buildingType)) return state

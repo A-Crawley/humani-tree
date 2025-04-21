@@ -13,6 +13,10 @@ const Events = () => {
         dispatch?.({type: 'timeTick'})
     })
 
+    document.addEventListener('addHuman', () => {
+        dispatch?.({type: 'addHuman'})
+    })
+
     document.addEventListener('daysAddedSinceLastSave', (event) => {
         const {detail} = event as unknown as { detail: number }
         if (detail <= 0) return
