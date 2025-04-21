@@ -1,7 +1,7 @@
-﻿import Button from "components/Button";
-import {useContext} from "react";
+﻿import {useContext} from "react";
 import {GameStateDispatchContext} from "../contexts/GameStateContext.ts";
 import Items from "types/Items.ts";
+import {Button} from "antd";
 
 const EarlyActions = () => {
     const dispatch = useContext(GameStateDispatchContext)
@@ -12,8 +12,8 @@ const EarlyActions = () => {
 
     return (
         <>
-            <Button variant='m' onClick={() => handleAddItem('sticks')}>Gather Sticks</Button>
-            <Button variant='m' onClick={() => handleAddItem('berries')}>Gather Berries</Button>
+            <Button size={'small'} onClick={() => handleAddItem('sticks')}>Gather Sticks</Button>
+            <Button size={'small'} onClick={() => handleAddItem('berries')}>Gather Berries</Button>
         </>
     )
 }

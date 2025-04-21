@@ -5,7 +5,7 @@ import Shop from "components/Shop.tsx";
 
 function App() {
     return (
-        <div className='w-screen h-screen bg-slate-200'>
+        <div className='w-full h-full bg-slate-200'>
             <TimeDisplay/>
             <div className='w-full flex h-full'>
                 <div className='flex flex-col gap-2 w-2/5 text-sm'>

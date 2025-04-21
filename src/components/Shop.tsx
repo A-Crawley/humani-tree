@@ -1,8 +1,8 @@
-﻿import Button from "components/Button.tsx";
-import {GameStateDispatchContext} from "../contexts/GameStateContext.ts";
+﻿import {GameStateDispatchContext} from "../contexts/GameStateContext.ts";
 import {useCallback, useContext, useMemo} from "react";
 import useGameState from "hooks/UseGameState.tsx";
 import {Buildings} from "types/Buildings.ts";
+import {Button} from "antd";
 
 const Shop = () => {
     const dispatch = useContext(GameStateDispatchContext)
@@ -21,7 +21,7 @@ const Shop = () => {
 
     return (
         <>
-            <Button variant='m' disabled={disableShack} onClick={handleBuildShack}>(<span>{buildings?.shack ?? 0}</span>) Build Shack</Button>
+            <Button size={'small'} disabled={disableShack} onClick={handleBuildShack}>(<span>{buildings?.shack ?? 0}</span>) Build Shack</Button>
         </>
     )
 }
