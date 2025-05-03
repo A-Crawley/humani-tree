@@ -4,7 +4,7 @@ import Time from "types/Time.ts";
 import {BuildingType} from "types/Buildings.ts";
 
 type GameState = {
-    items?: Items
+    items: Items
     humans?: Human[]
     time?: Time
     buildings?: Record<BuildingType, number>
