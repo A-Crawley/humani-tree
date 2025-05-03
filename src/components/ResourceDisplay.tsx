@@ -1,4 +1,4 @@
-﻿import useGameState from "hooks/UseGameState";
+﻿import useGameState from "hooks/UseGameState.ts";
 import Resource from "components/Resource";
 
 const ResourceDisplay = () => {

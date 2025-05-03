@@ -1,4 +1,4 @@
-﻿import useGameState from "hooks/UseGameState";
+﻿import useGameState from "hooks/UseGameState.ts";
 
 const TimeDisplay = () => {
     const {time} = useGameState()
