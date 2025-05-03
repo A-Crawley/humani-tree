@@ -4,7 +4,7 @@ import GameState from "types/GameState";
 import { GameStateContext, GameStateDispatchContext } from "./GameStateContext";
 import gameStateReducer from "utils/GameStateReducer.ts";
 
-const initialGameState = {
+export const initialGameState = {
     time: {
         season: 'Spring',
         date: 1,
@@ -16,8 +16,19 @@ const initialGameState = {
             amount: 0,
             multiplier: 1
         },
-        logs: {}
+        logs: {
+            amount: 0,
+            multiplier: 1
+        }
     },
+    food: {
+      berries: {
+          amount: 0,
+          multiplier: 1,
+          foodUnits: 0.25
+      }
+    },
+    humans: [],
     buildings: {
         shack: 0,
     }
